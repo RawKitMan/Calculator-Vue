@@ -8,29 +8,69 @@
             <div id="numbers">
               <div>
                 <BButtonGroup class="mt-5" size="lg">
-                  <BButton @click="enterValue($event)" value="7">7</BButton>
-                  <BButton @click="enterValue($event)" value="8">8</BButton>
+                  <BButton
+                    class="btnSpace"
+                    @click="enterValue($event)"
+                    value="7"
+                    >7</BButton
+                  >
+                  <BButton
+                    class="btnSpace"
+                    @click="enterValue($event)"
+                    value="8"
+                    >8</BButton
+                  >
                   <BButton @click="enterValue($event)" value="9">9</BButton>
                 </BButtonGroup>
               </div>
               <div>
                 <BButtonGroup class="mt-2" size="lg">
-                  <BButton @click="enterValue($event)" value="4">4</BButton>
-                  <BButton @click="enterValue($event)" value="5">5</BButton>
+                  <BButton
+                    class="btnSpace"
+                    @click="enterValue($event)"
+                    value="4"
+                    >4</BButton
+                  >
+                  <BButton
+                    class="btnSpace"
+                    @click="enterValue($event)"
+                    value="5"
+                    >5</BButton
+                  >
                   <BButton @click="enterValue($event)" value="6">6</BButton>
                 </BButtonGroup>
               </div>
               <div>
                 <BButtonGroup class="mt-2" size="lg">
-                  <BButton @click="enterValue($event)" value="1">1</BButton>
-                  <BButton @click="enterValue($event)" value="2">2</BButton>
+                  <BButton
+                    class="btnSpace"
+                    @click="enterValue($event)"
+                    value="1"
+                    >1</BButton
+                  >
+                  <BButton
+                    class="btnSpace"
+                    @click="enterValue($event)"
+                    value="2"
+                    >2</BButton
+                  >
                   <BButton @click="enterValue($event)" value="3">3</BButton>
                 </BButtonGroup>
               </div>
               <div>
                 <BButtonGroup class="mt-2" size="lg">
-                  <BButton @click="enterValue($event)" value="+/-">+/-</BButton>
-                  <BButton @click="enterValue($event)" value="0">0</BButton>
+                  <BButton
+                    class="btnSpace"
+                    @click="enterValue($event)"
+                    value="+/-"
+                    >+/-</BButton
+                  >
+                  <BButton
+                    class="btnSpace"
+                    @click="enterValue($event)"
+                    value="0"
+                    >0</BButton
+                  >
                   <BButton @click="enterValue($event)" value=".">.</BButton>
                 </BButtonGroup>
               </div>
@@ -39,11 +79,21 @@
           <BCol>
             <div id="operators">
               <BButtonGroup size="lg" class="mt-5" vertical>
-                <BButton @click="enterValue($event)" value="C">C</BButton>
-                <BButton @click="enterValue($event)" value="+">+</BButton>
-                <BButton @click="enterValue($event)" value="-">-</BButton>
-                <BButton @click="enterValue($event)" value="*">*</BButton>
-                <BButton @click="enterValue($event)" value="/">/</BButton>
+                <BButton class="mb-2" @click="enterValue($event)" value="C"
+                  >C</BButton
+                >
+                <BButton class="mb-2" @click="enterValue($event)" value="+"
+                  >+</BButton
+                >
+                <BButton class="mb-2" @click="enterValue($event)" value="-"
+                  >-</BButton
+                >
+                <BButton class="mb-2" @click="enterValue($event)" value="*"
+                  >*</BButton
+                >
+                <BButton class="mb-2" @click="enterValue($event)" value="/"
+                  >/</BButton
+                >
                 <BButton @click="enterValue($event)" value="=">=</BButton>
               </BButtonGroup>
             </div>

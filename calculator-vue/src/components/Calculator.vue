@@ -1,13 +1,13 @@
 <template>
   <div>
-    <BContainer fluid="md" class="bg-info">
+    <BContainer fluid class="bg-info">
       <BRow>
-        <BCol />
-        <BCol>
+        <BCol cols="3" />
+        <BCol cols="6">
           <SimpleCalculator v-if="isSimple" />
           <HarderCalculator v-else />
         </BCol>
-        <BCol />
+        <BCol cols="3" />
       </BRow>
     </BContainer>
   </div>
