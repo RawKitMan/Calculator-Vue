@@ -1,8 +1,8 @@
 <template>
   <div>
-    <BContainer fluid class="bg-info">
+    <BContainer class="bg-info">
       <BRow>
-        <BCol cols="3" />
+        <BCol cols="3"><BButton @click="toggleCalcs">Switch</BButton> </BCol>
         <BCol cols="6">
           <SimpleCalculator v-if="isSimple" />
           <HarderCalculator v-else />
@@ -17,7 +17,7 @@
 import Vue from "vue";
 import Component from "vue-class-component";
 
-import { BContainer } from "bootstrap-vue";
+import { BContainer, BButton } from "bootstrap-vue";
 
 import SimpleCalculator from "@/components/SimpleCalculator.vue";
 import HarderCalculator from "@/components/HarderCalculator.vue";
@@ -25,13 +25,20 @@ import HarderCalculator from "@/components/HarderCalculator.vue";
 @Component<Calculator>({
   components: {
     BContainer,
+    BButton,
     SimpleCalculator,
     HarderCalculator,
   },
 })
 export default class Calculator extends Vue {
+  private isSimpleCalculator: boolean = true;
+
   private get isSimple() {
-    return true;
+    return this.isSimpleCalculator;
+  }
+
+  private toggleCalcs() {
+    this.isSimpleCalculator = !this.isSimpleCalculator;
   }
 }
 </script>
