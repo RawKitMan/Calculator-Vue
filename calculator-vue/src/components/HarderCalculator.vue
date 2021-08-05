@@ -160,12 +160,15 @@ import {
   },
 })
 export default class HarderCalculator extends Vue {
+  private calcTitle = "Harder Calculator";
   private value = "";
   private operators: string[] = [];
   private reset: boolean = true;
   private operatorRegex: RegExp = /[-+*/]/;
   private output: any[] = [];
   private prevResults: string[] = [];
+  private prevValueIndex = "";
+  private invalidEquation = false;
 
   private alertMsg: string = "";
   private dismissCountDown: number = 0;
@@ -178,6 +181,10 @@ export default class HarderCalculator extends Vue {
     "-": 1,
   };
 
+  private get noResultsCalculated() {
+    return this.prevResults.length === 0;
+  }
+
   private enterValue(e: any) {
     if (this.reset) {
       this.reset = false;
@@ -185,12 +192,6 @@ export default class HarderCalculator extends Vue {
     }
 
     const input = e.target.value;
-
-    if (input === "=") {
-      this.calculate();
-    } else {
-      this.value += input.match(this.operatorRegex) ? ` ${input} ` : input;
-    }
 
     switch (input) {
       case "C":
@@ -206,7 +207,7 @@ export default class HarderCalculator extends Vue {
         this.togglePosNegOperand();
         break;
       default:
-        this.value += input;
+        this.value += input.match(this.operatorRegex) ? ` ${input} ` : input;
         break;
     }
   }
@@ -218,76 +219,87 @@ export default class HarderCalculator extends Vue {
   private calculate() {
     // Take operator and number arrays and perform order of operations.
     // parse equation one by one
+    const arr = this.value.split(" ");
+    console.log(arr);
     this.value.split(" ").forEach((x: any) => {
+      if (this.invalidEquation) {
+        return;
+      }
+
       if (x.match(this.operatorRegex)) {
         if (this.operators.length) {
           if (this.operators[0] === "*" || this.operators[0] === "/") {
-            const left = this.output.pop();
-            const right = this.output.pop();
-
+            const right = this.output.shift();
+            const left = this.output.shift();
             switch (this.operators[0]) {
               case "*":
-                this.output.push(left * right);
+                this.output.unshift(left * right);
                 break;
               case "/":
                 if (right !== 0) {
-                  this.output.push(left / right);
+                  this.output.unshift(left / right);
                 } else {
                   this.showError("ERROR: Cannot divide by 0");
-                  this.resetCalculator();
-                  return false;
+                  this.invalidEquation = true;
                 }
                 break;
             }
+            this.operators.shift();
           }
-          this.operators.pop();
         }
-        this.operators.push(x);
+        this.operators.unshift(x);
       } else {
-        if (isNaN(x)) {
-          this.showError("ERROR: Not a valid number");
-          this.resetCalculator();
+        if (isNaN(x) || x === "") {
+          this.showError("ERROR: Invalid equation");
+          this.invalidEquation = true;
           return false;
         }
-        this.output.push(parseFloat(x));
+        console.log(x);
+        this.output.unshift(parseFloat(x));
       }
     });
+    console.log(this.output);
+    console.log(this.operators);
+    if (this.operators.length > 0 && this.output.length < 2) {
+      console.log("well?");
+      this.invalidEquation = true;
+    }
 
-    while (this.operators.length) {
-      const left = this.output.pop();
-      const right = this.output.pop();
+    while (this.operators.length && !this.invalidEquation) {
+      const right = this.output.shift();
+      const left = this.output.shift();
 
       switch (this.operators[0]) {
         case "*":
-          this.output.push(left * right);
+          this.output.unshift(left * right);
           break;
         case "/":
           if (right !== 0) {
-            this.output.push(left / right);
+            this.output.unshift(left / right);
           } else {
             this.showError("ERROR: Cannot divide by 0");
-            this.resetCalculator();
+            this.invalidEquation = true;
             return false;
           }
           break;
         case "+":
-          this.output.push(left + right);
+          this.output.unshift(left + right);
           break;
         case "-":
-          this.output.push(left - right);
+          this.output.unshift(left - right);
           break;
       }
-      this.operators.pop();
+      this.operators.shift();
     }
 
-    if (this.operators.length) {
-      this.showError("ERROR: Equation must start and end with a number");
+    if (this.invalidEquation) {
+      this.showError("ERROR: Invalid equation");
       this.resetCalculator();
       return false;
     }
 
     this.value = this.output[0].toString();
-    this.prevResults.push(this.value);
+    this.prevResults.unshift(this.value);
     this.reset = true;
     this.operators = [];
     this.output = [];
@@ -297,12 +309,16 @@ export default class HarderCalculator extends Vue {
     this.dismissCountDown = this.dismissTime;
     this.alertMsg = msg;
   }
+  private countDownChanged(value: any) {
+    this.dismissCountDown = value;
+  }
 
   private resetCalculator() {
     this.value = "";
     this.output = [];
     this.operators = [];
     this.reset = true;
+    this.invalidEquation = false;
   }
 }
 </script>
