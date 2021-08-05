@@ -219,8 +219,6 @@ export default class HarderCalculator extends Vue {
   private calculate() {
     // Take operator and number arrays and perform order of operations.
     // parse equation one by one
-    const arr = this.value.split(" ");
-    console.log(arr);
     this.value.split(" ").forEach((x: any) => {
       if (this.invalidEquation) {
         return;
@@ -254,14 +252,11 @@ export default class HarderCalculator extends Vue {
           this.invalidEquation = true;
           return false;
         }
-        console.log(x);
         this.output.unshift(parseFloat(x));
       }
     });
-    console.log(this.output);
-    console.log(this.operators);
+
     if (this.operators.length > 0 && this.output.length < 2) {
-      console.log("well?");
       this.invalidEquation = true;
     }
 
