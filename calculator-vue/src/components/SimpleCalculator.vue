@@ -1,5 +1,5 @@
 <template>
-  <BCard :header="calcTitle">
+  <BCard :header="calcTitle" class="calcCard">
     <BCardBody>
       <BAlert
         :show="dismissCountDown"
@@ -110,7 +110,9 @@
           <BCol>
             <BRow>
               <BCol>
-                <label for="prevValue">Enter value n between 1-10</label>
+                <label class="prevValueLabel" for="prevValue"
+                  >Enter value n between 1-10</label
+                >
                 <BFormInput
                   id="prevValue"
                   v-model="prevValueIndex"
@@ -274,6 +276,3 @@ export default class SimpleCalculator extends Vue {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-</style>

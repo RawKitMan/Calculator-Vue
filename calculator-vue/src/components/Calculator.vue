@@ -1,9 +1,11 @@
 <template>
   <div>
-    <BContainer class="bg-info">
+    <BContainer fluid class="bg-info calculator">
       <BRow>
-        <BCol cols="3"><BButton @click="toggleCalcs">Switch</BButton> </BCol>
-        <BCol cols="6">
+        <BCol cols="3" class="mt-3"
+          ><BButton @click="toggleCalcs">Switch</BButton>
+        </BCol>
+        <BCol cols="6" class="mt-3">
           <SimpleCalculator v-if="isSimpleCalc" />
           <HarderCalculator v-else />
         </BCol>
@@ -43,3 +45,10 @@ export default class Calculator extends Vue {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.calculator {
+  height: 100vh;
+  min-width: 650px;
+}
+</style>

@@ -4,3 +4,9 @@
 .card-body {
     background-color: $colorVeryDark;
 }
+.prevValueLabel {
+    color: $colorWhite;
+}
+.calcCard.card {
+    min-width: 425px;
+  }

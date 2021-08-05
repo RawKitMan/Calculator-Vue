@@ -1,5 +1,5 @@
 <template>
-  <BCard :header="calcTitle">
+  <BCard :header="calcTitle" class="calcCard">
     <BCardBody>
       <BAlert
         :show="dismissCountDown"
@@ -114,7 +114,9 @@
           <BCol>
             <BRow>
               <BCol>
-                <label for="prevValue">Enter value n between 1-10</label>
+                <label class="prevValueLabel" for="prevValue"
+                  >Enter value n between 1-10</label
+                >
                 <BFormInput
                   id="prevValue"
                   v-model="prevValueIndex"
@@ -172,14 +174,7 @@ export default class HarderCalculator extends Vue {
 
   private alertMsg: string = "";
   private dismissCountDown: number = 0;
-  private dismissTime = 3;
-
-  private precedence: object = {
-    "*": 2,
-    "/": 2,
-    "+": 1,
-    "-": 1,
-  };
+  private dismissTime = 4;
 
   private get noResultsCalculated() {
     return this.prevResults.length === 0;
@@ -314,6 +309,22 @@ export default class HarderCalculator extends Vue {
     this.operators = [];
     this.reset = true;
     this.invalidEquation = false;
+    this.prevValueIndex = "";
+  }
+
+  private getPreviousResult(index: any) {
+    if (
+      isNaN(index) ||
+      parseInt(index, 10) < 1 ||
+      parseInt(index, 10) > 10 ||
+      parseInt(index, 10) > this.prevResults.length
+    ) {
+      this.prevValueIndex = "";
+      this.showError("ERROR: Invalid index");
+      return false;
+    }
+    this.resetCalculator();
+    this.value = this.prevResults[parseInt(index, 10) - 1];
   }
 }
 </script>
