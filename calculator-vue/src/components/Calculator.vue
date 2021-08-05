@@ -36,8 +36,7 @@ export default class Calculator extends Vue {
   private isSimpleCalculator: boolean = true;
 
   private get isSimpleCalc() {
-    // return this.isSimpleCalculator;
-    return false;
+    return this.isSimpleCalculator;
   }
 
   private toggleCalcs() {

@@ -166,11 +166,12 @@ export default class HarderCalculator extends Vue {
   private value = "";
   private operators: string[] = [];
   private reset: boolean = true;
-  private operatorRegex: RegExp = /[-+*/]/;
+  private operatorRegex: RegExp = /^[-+*/]$/g;
   private output: any[] = [];
   private prevResults: string[] = [];
   private prevValueIndex = "";
   private invalidEquation = false;
+  private newNumberStartIndex: number = 0;
 
   private alertMsg: string = "";
   private dismissCountDown: number = 0;
@@ -202,23 +203,46 @@ export default class HarderCalculator extends Vue {
         this.togglePosNegOperand();
         break;
       default:
-        this.value += input.match(this.operatorRegex) ? ` ${input} ` : input;
+        if (input.match(this.operatorRegex)) {
+          this.value += ` ${input} `;
+          this.newNumberStartIndex = this.value.length;
+        } else {
+          this.value += input;
+        }
         break;
     }
   }
 
   private togglePosNegOperand() {
-    console.log("togglePostNegOperand");
+    if (this.value.length > 0) {
+      if (this.value.length === 1 && this.value[0] === "-") {
+        this.value = "";
+      } else {
+        const symbol = this.value[this.newNumberStartIndex];
+        if (symbol === "-") {
+          this.value =
+            this.value.substring(0, this.newNumberStartIndex) +
+            this.value.substring(this.newNumberStartIndex + 1);
+        } else {
+          this.value =
+            this.value.substring(0, this.newNumberStartIndex) +
+            "-" +
+            this.value.substring(this.newNumberStartIndex);
+        }
+      }
+    } else {
+      this.value = "-";
+    }
   }
 
   private calculate() {
     // Take operator and number arrays and perform order of operations.
-    // parse equation one by one
+    // parse equation one by one\
+
     this.value.split(" ").forEach((x: any) => {
       if (this.invalidEquation) {
         return;
       }
-
       if (x.match(this.operatorRegex)) {
         if (this.operators.length) {
           if (this.operators[0] === "*" || this.operators[0] === "/") {
@@ -243,16 +267,20 @@ export default class HarderCalculator extends Vue {
         this.operators.unshift(x);
       } else {
         if (isNaN(x) || x === "") {
+          console.log("what?");
           this.showError("ERROR: Invalid equation");
           this.invalidEquation = true;
           return false;
         }
+
         this.output.unshift(parseFloat(x));
       }
     });
 
+    console.log(this.output);
     if (this.operators.length > 0 && this.output.length < 2) {
       this.invalidEquation = true;
+      console.log("sure");
     }
 
     while (this.operators.length && !this.invalidEquation) {
@@ -310,6 +338,7 @@ export default class HarderCalculator extends Vue {
     this.reset = true;
     this.invalidEquation = false;
     this.prevValueIndex = "";
+    this.newNumberStartIndex = 0;
   }
 
   private getPreviousResult(index: any) {
