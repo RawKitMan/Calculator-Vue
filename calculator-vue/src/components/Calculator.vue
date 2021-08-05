@@ -4,7 +4,7 @@
       <BRow>
         <BCol cols="3"><BButton @click="toggleCalcs">Switch</BButton> </BCol>
         <BCol cols="6">
-          <SimpleCalculator v-if="isSimple" />
+          <SimpleCalculator v-if="isSimpleCalc" />
           <HarderCalculator v-else />
         </BCol>
         <BCol cols="3" />
@@ -33,7 +33,7 @@ import HarderCalculator from "@/components/HarderCalculator.vue";
 export default class Calculator extends Vue {
   private isSimpleCalculator: boolean = true;
 
-  private get isSimple() {
+  private get isSimpleCalc() {
     return this.isSimpleCalculator;
   }
 

@@ -190,13 +190,9 @@ export default class SimpleCalculator extends Vue {
   }
 
   private handleInput(input: string) {
-    console.log("handleInput", input);
     switch (input) {
       case "C":
-        this.left = 0;
-        this.value = "0";
-        this.operator = "";
-        this.reset = true;
+        this.resetCalculator();
         break;
       case "=":
         this.calculate();
