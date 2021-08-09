@@ -86,9 +86,7 @@
           <BCol>
             <div id="operators">
               <BButtonGroup size="lg" class="mt-5" vertical>
-                <BButton class="mb-2" @click="enterValue($event)" value="C"
-                  >C</BButton
-                >
+                <BButton class="mb-2" @click="resetCalculator">C</BButton>
                 <BButton class="mb-2" @click="enterValue($event)" value="+"
                   >+</BButton
                 >
@@ -179,28 +177,31 @@ export default class SimpleCalculator extends Vue {
   }
 
   private enterValue(e: any) {
-    if (this.reset) {
-      this.reset = false;
-      this.value = "";
-    }
     const input = e.target.value;
     if (isNaN(input)) {
       this.handleInput(input);
     } else {
-      this.value += input;
+      if (this.reset) {
+        this.reset = false;
+        this.value = "";
+      }
+      if (parseInt(this.value) == 0) {
+        this.value = input;
+      } else {
+        this.value += input;
+      }
     }
   }
 
   private handleInput(input: string) {
     switch (input) {
-      case "C":
-        this.resetCalculator();
-        break;
       case "=":
-        this.calculate();
-        this.left = 0;
-        this.operator = "";
-        this.reset = true;
+        if (this.left && this.operator) {
+          this.calculate();
+          this.left = 0;
+          this.operator = "";
+          this.reset = true;
+        }
         break;
       case ".":
         this.value += input;
@@ -211,16 +212,16 @@ export default class SimpleCalculator extends Vue {
         }
         break;
       default:
-        if (this.left === 0) {
+        if (this.value && this.left === 0) {
           this.left = parseFloat(this.value);
-          this.setInput(input);
+          this.setOperator(input);
           this.reset = true;
         }
         break;
     }
   }
 
-  private setInput(input: string) {
+  private setOperator(input: string) {
     this.operator = input;
   }
 
@@ -239,10 +240,12 @@ export default class SimpleCalculator extends Vue {
         this.value = (this.left / parseFloat(this.value)).toString();
         break;
     }
-    this.prevValues.push(this.value);
-    if (this.prevValues.length > 11) {
+    this.prevValues.unshift(this.value);
+    if (this.prevValues.length > 10) {
       this.prevValues.pop();
     }
+
+    console.log(this.prevValues);
   }
 
   private getPreviousResult(index: any) {

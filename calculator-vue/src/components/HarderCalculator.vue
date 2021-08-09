@@ -20,69 +20,89 @@
               <div>
                 <BButtonGroup class="mt-5" size="lg">
                   <BButton
-                    class="btnSpace"
+                    class="border-danger bg-danger btnSpace"
                     @click="enterValue($event)"
                     value="7"
                     >7</BButton
                   >
                   <BButton
-                    class="btnSpace"
+                    class="border-danger bg-danger btnSpace"
                     @click="enterValue($event)"
                     value="8"
                     >8</BButton
                   >
-                  <BButton @click="enterValue($event)" value="9">9</BButton>
+                  <BButton
+                    class="border-danger bg-danger"
+                    @click="enterValue($event)"
+                    value="9"
+                    >9</BButton
+                  >
                 </BButtonGroup>
               </div>
               <div>
                 <BButtonGroup class="mt-2" size="lg">
                   <BButton
-                    class="btnSpace"
+                    class="border-danger bg-danger btnSpace"
                     @click="enterValue($event)"
                     value="4"
                     >4</BButton
                   >
                   <BButton
-                    class="btnSpace"
+                    class="border-danger bg-danger btnSpace"
                     @click="enterValue($event)"
                     value="5"
                     >5</BButton
                   >
-                  <BButton @click="enterValue($event)" value="6">6</BButton>
+                  <BButton
+                    class="border-danger bg-danger"
+                    @click="enterValue($event)"
+                    value="6"
+                    >6</BButton
+                  >
                 </BButtonGroup>
               </div>
               <div>
                 <BButtonGroup class="mt-2" size="lg">
                   <BButton
-                    class="btnSpace"
+                    class="border-danger bg-danger btnSpace"
                     @click="enterValue($event)"
                     value="1"
                     >1</BButton
                   >
                   <BButton
-                    class="btnSpace"
+                    class="border-danger bg-danger btnSpace"
                     @click="enterValue($event)"
                     value="2"
                     >2</BButton
                   >
-                  <BButton @click="enterValue($event)" value="3">3</BButton>
+                  <BButton
+                    class="border-danger bg-danger"
+                    @click="enterValue($event)"
+                    value="3"
+                    >3</BButton
+                  >
                 </BButtonGroup>
               </div>
               <div>
                 <BButtonGroup class="mt-2" size="lg">
                   <BButton
-                    class="btnSpace"
+                    class="border-danger bg-danger btnSpace"
                     @click="enterValue($event)"
                     value="+/-"
                     >+/-</BButton
                   >
                   <BButton
-                    class="btnSpace"
+                    class="border-danger bg-danger btnSpace"
                     @click="enterValue($event)"
                     value="0"
                     >0</BButton
                   >
-                  <BButton @click="enterValue($event)" value=".">.</BButton>
+                  <BButton
+                    class="border-danger bg-danger"
+                    @click="enterValue($event)"
+                    value="."
+                    >.</BButton
+                  >
                 </BButtonGroup>
               </div>
             </div>
@@ -90,22 +110,41 @@
           <BCol>
             <div id="operators">
               <BButtonGroup size="lg" class="mt-5" vertical>
-                <BButton class="mb-2" @click="enterValue($event)" value="C"
+                <BButton
+                  class="border-danger bg-danger mb-2"
+                  @click="resetCalculator"
                   >C</BButton
                 >
-                <BButton class="mb-2" @click="enterValue($event)" value="+"
+                <BButton
+                  class="border-danger bg-danger mb-2"
+                  @click="enterValue($event)"
+                  value="+"
                   >+</BButton
                 >
-                <BButton class="mb-2" @click="enterValue($event)" value="-"
+                <BButton
+                  class="border-danger bg-danger mb-2"
+                  @click="enterValue($event)"
+                  value="-"
                   >-</BButton
                 >
-                <BButton class="mb-2" @click="enterValue($event)" value="*"
+                <BButton
+                  class="border-danger bg-danger mb-2"
+                  @click="enterValue($event)"
+                  value="*"
                   >*</BButton
                 >
-                <BButton class="mb-2" @click="enterValue($event)" value="/"
+                <BButton
+                  class="border-danger bg-danger mb-2"
+                  @click="enterValue($event)"
+                  value="/"
                   >/</BButton
                 >
-                <BButton @click="enterValue($event)" value="=">=</BButton>
+                <BButton
+                  class="border-danger bg-danger"
+                  @click="enterValue($event)"
+                  value="="
+                  >=</BButton
+                >
               </BButtonGroup>
             </div>
           </BCol>
@@ -127,6 +166,7 @@
               </BCol>
               <BCol class="mt-4">
                 <BButton
+                  class="border-danger bg-danger"
                   @click="getPreviousResult(prevValueIndex)"
                   :disabled="noResultsCalculated"
                   >Get nth Previous Result</BButton
@@ -190,12 +230,6 @@ export default class HarderCalculator extends Vue {
     const input = e.target.value;
 
     switch (input) {
-      case "C":
-        this.value = "";
-        this.output = [];
-        this.operators = [];
-        this.reset = true;
-        break;
       case "=":
         this.calculate();
         break;
@@ -277,10 +311,8 @@ export default class HarderCalculator extends Vue {
       }
     });
 
-    console.log(this.output);
     if (this.operators.length > 0 && this.output.length < 2) {
       this.invalidEquation = true;
-      console.log("sure");
     }
 
     while (this.operators.length && !this.invalidEquation) {
@@ -318,6 +350,11 @@ export default class HarderCalculator extends Vue {
 
     this.value = this.output[0].toString();
     this.prevResults.unshift(this.value);
+
+    if (this.prevResults.length > 10) {
+      this.prevResults.pop();
+    }
+
     this.reset = true;
     this.operators = [];
     this.output = [];

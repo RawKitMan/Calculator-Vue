@@ -1,2 +1,11 @@
 $colorVeryDark: #01182a;
 $colorWhite: #fff;
+$colorMidLight: #33b7b1;
+$colorRed: #dc3545;
+
+@function light75($color) {
+    @return mix($colorWhite, $color, 25%);
+}
+
+$colorMidLight75: light75($colorMidLight);
+$colorRed75: light75($colorRed);

@@ -9,4 +9,13 @@
 }
 .calcCard.card {
     min-width: 425px;
-  }
+}
+.btn-secondary {
+    background-color: $colorMidLight !important;
+}
+.btn-secondary:not(.bg-danger):hover {
+    background-color: $colorMidLight75 !important;
+}
+.btn-secondary.bg-danger:hover {
+    background-color: $colorRed75 !important;
+}
