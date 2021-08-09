@@ -2,8 +2,9 @@
   "name": "calculator-vue",
   "version": "1.0.0",
   "description": "Revamp of old calculator project for HBK",
-  "main": "index.js",
+  "main": "main.ts",
   "scripts": {
+    "start": "cd calculator-vue && npm run serve",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
