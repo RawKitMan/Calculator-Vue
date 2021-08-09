@@ -87,7 +87,10 @@
             <div id="operators">
               <BButtonGroup size="lg" class="mt-5" vertical>
                 <BButton class="mb-2" @click="resetCalculator">C</BButton>
-                <BButton class="mb-2" @click="enterValue($event)" value="+"
+                <BButton
+                  class="mb-2 testPlusBtn"
+                  @click="enterValue($event)"
+                  value="+"
                   >+</BButton
                 >
                 <BButton class="mb-2" @click="enterValue($event)" value="-"
@@ -99,7 +102,12 @@
                 <BButton class="mb-2" @click="enterValue($event)" value="/"
                   >/</BButton
                 >
-                <BButton @click="enterValue($event)" value="=">=</BButton>
+                <BButton
+                  @click="enterValue($event)"
+                  class="testEqualsBtn"
+                  value="="
+                  >=</BButton
+                >
               </BButtonGroup>
             </div>
           </BCol>
@@ -140,60 +148,68 @@ import Component from "vue-class-component";
 
 import {
   BCard,
+  BCardBody,
   BButtonGroup,
   BFormInput,
   BContainer,
   BAlert,
+  BCol,
+  BRow,
+  BButton,
 } from "bootstrap-vue";
 
 @Component<SimpleCalculator>({
   components: {
     BCard,
+    BCardBody,
     BButtonGroup,
     BFormInput,
     BContainer,
     BAlert,
+    BRow,
+    BCol,
+    BButton,
   },
 })
 export default class SimpleCalculator extends Vue {
-  private value: string = "";
-  private left: number = 0;
-  private operator: string = "";
-  private reset: boolean = true;
-  private prevValueIndex: string = "";
+  public result: string = "";
+  public left: number = 0;
+  public operator: string = "";
+  public reset: boolean = true;
+  public prevValueIndex: string = "";
 
-  private dismissTime = 3;
-  private dismissCountDown = 0;
-  private alertMsg = "";
+  public dismissTime = 3;
+  public dismissCountDown = 0;
+  public alertMsg = "";
 
-  private prevValues: string[] = [];
+  public prevValues: string[] = [];
 
-  private get calcTitle() {
+  public get calcTitle() {
     return "Simple Calculator";
   }
 
-  private get noResultsCalculated() {
+  public get noResultsCalculated() {
     return this.prevValues.length === 0;
   }
 
-  private enterValue(e: any) {
+  public enterValue(e: any) {
     const input = e.target.value;
     if (isNaN(input)) {
       this.handleInput(input);
     } else {
       if (this.reset) {
         this.reset = false;
-        this.value = "";
+        this.result = "";
       }
-      if (parseInt(this.value) == 0) {
-        this.value = input;
+      if (parseInt(this.result) == 0) {
+        this.result = input;
       } else {
-        this.value += input;
+        this.result += input;
       }
     }
   }
 
-  private handleInput(input: string) {
+  public handleInput(input: string) {
     switch (input) {
       case "=":
         if (this.left && this.operator) {
@@ -204,16 +220,16 @@ export default class SimpleCalculator extends Vue {
         }
         break;
       case ".":
-        this.value += input;
+        this.result += input;
         break;
       case "+/-":
-        if (this.value) {
-          this.value = (-parseFloat(this.value)).toString();
+        if (this.result) {
+          this.result = (-parseFloat(this.result)).toString();
         }
         break;
       default:
-        if (this.value && this.left === 0) {
-          this.left = parseFloat(this.value);
+        if (this.result && this.left === 0) {
+          this.left = parseFloat(this.result);
           this.setOperator(input);
           this.reset = true;
         }
@@ -221,34 +237,32 @@ export default class SimpleCalculator extends Vue {
     }
   }
 
-  private setOperator(input: string) {
+  public setOperator(input: string) {
     this.operator = input;
   }
 
-  private calculate() {
+  public calculate() {
     switch (this.operator) {
       case "+":
-        this.value = (this.left + parseFloat(this.value)).toString();
+        this.result = (this.left + parseFloat(this.result)).toString();
         break;
       case "-":
-        this.value = (this.left - parseFloat(this.value)).toString();
+        this.result = (this.left - parseFloat(this.result)).toString();
         break;
       case "*":
-        this.value = (this.left * parseFloat(this.value)).toString();
+        this.result = (this.left * parseFloat(this.result)).toString();
         break;
       case "/":
-        this.value = (this.left / parseFloat(this.value)).toString();
+        this.result = (this.left / parseFloat(this.result)).toString();
         break;
     }
-    this.prevValues.unshift(this.value);
+    this.prevValues.unshift(this.result);
     if (this.prevValues.length > 10) {
       this.prevValues.pop();
     }
-
-    console.log(this.prevValues);
   }
 
-  private getPreviousResult(index: any) {
+  public getPreviousResult(index: any) {
     if (
       isNaN(index) ||
       parseInt(index, 10) < 1 ||
@@ -260,19 +274,19 @@ export default class SimpleCalculator extends Vue {
       return false;
     }
     this.resetCalculator();
-    this.value = this.prevValues[parseInt(index, 10) - 1];
+    this.result = this.prevValues[parseInt(index, 10) - 1];
   }
 
-  private showError() {
+  public showError() {
     this.dismissCountDown = this.dismissTime;
     this.alertMsg = "ERROR: Invalid index";
   }
-  private countDownChanged(value: any) {
+  public countDownChanged(value: any) {
     this.dismissCountDown = value;
   }
-  private resetCalculator() {
+  public resetCalculator() {
     this.left = 0;
-    this.value = "0";
+    this.result = "0";
     this.operator = "";
     this.reset = true;
     this.prevValueIndex = "";

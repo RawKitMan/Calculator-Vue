@@ -186,19 +186,27 @@ import Component from "vue-class-component";
 
 import {
   BCard,
+  BCardBody,
   BButtonGroup,
   BFormInput,
   BContainer,
   BAlert,
+  BRow,
+  BCol,
+  BButton,
 } from "bootstrap-vue";
 
 @Component<HarderCalculator>({
   components: {
     BCard,
+    BCardBody,
     BButtonGroup,
     BFormInput,
     BContainer,
     BAlert,
+    BRow,
+    BCol,
+    BButton,
   },
 })
 export default class HarderCalculator extends Vue {
