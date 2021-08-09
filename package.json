@@ -1,0 +1,19 @@
+{
+  "name": "calculator-vue",
+  "version": "1.0.0",
+  "description": "Revamp of old calculator project for HBK",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RawKitMan/Calculator-Vue.git"
+  },
+  "author": "CJ Vaughn",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RawKitMan/Calculator-Vue/issues"
+  },
+  "homepage": "https://github.com/RawKitMan/Calculator-Vue#readme"
+}
