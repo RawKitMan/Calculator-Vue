@@ -2,11 +2,15 @@
   "name": "calculator-vue",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "15.9.0"
+  },
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "test": "vue-cli-service test:unit",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "heroku-postbuild": "ng build --prod"
   },
   "dependencies": {
     "core-js": "^3.6.5",
