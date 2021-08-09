@@ -9,7 +9,7 @@ describe('SimpleCalculator', () => {
     expect(wrapper.vm).toBeTruthy();
   });
 
-  it('sets left value', () => {
+  it('sets left value and operator', () => {
 
     wrapper.setData({ left: 0, result: "45" });
 
@@ -26,4 +26,10 @@ describe('SimpleCalculator', () => {
 
     expect((wrapper.vm as any).result).toBe("70");
   });
+
+  it('grabs nth previous value', () => {
+    wrapper.setData({ prevValues: ["17", "28", "-3", "7"] });
+    wrapperVM.getPreviousResult(3);
+    expect(wrapperVM.result).toBe("-3");
+  })
 });
