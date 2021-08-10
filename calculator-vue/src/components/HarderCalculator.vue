@@ -12,6 +12,8 @@
         v-model="value"
         placeholder="Enter equation here"
         type="text"
+        readonly
+        @change="enterValue($event)"
       />
       <BContainer>
         <BRow>
@@ -86,7 +88,7 @@
               <div>
                 <BButtonGroup class="mt-2" size="lg">
                   <BButton
-                    class="border-danger bg-danger btnSpace"
+                    class="border-danger bg-danger btnSpace positiveNegative"
                     @click="enterValue($event)"
                     value="+/-"
                     >+/-</BButton

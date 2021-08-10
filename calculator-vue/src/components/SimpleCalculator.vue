@@ -8,7 +8,7 @@
         variant="danger"
         >{{ alertMsg }}</BAlert
       >
-      <BFormInput v-model="value" placeholder="0" type="number" />
+      <BFormInput v-model="result" readonly placeholder="0" type="number" />
       <BContainer>
         <BRow>
           <BCol>
@@ -67,7 +67,7 @@
               <div>
                 <BButtonGroup class="mt-2" size="lg">
                   <BButton
-                    class="btnSpace"
+                    class="btnSpace positiveNegative"
                     @click="enterValue($event)"
                     value="+/-"
                     >+/-</BButton
@@ -293,3 +293,18 @@ export default class SimpleCalculator extends Vue {
   }
 }
 </script>
+
+<style scoped>
+
+/* Hide number text field arrows.
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+</style>
