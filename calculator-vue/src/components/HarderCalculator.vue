@@ -87,7 +87,7 @@
               <div>
                 <BButtonGroup class="mt-2" size="lg">
                   <BButton
-                    class="border-danger bg-danger btnSpace"
+                    class="border-danger bg-danger btnSpace positiveNegative"
                     @click="enterValue($event)"
                     value="+/-"
                     >+/-</BButton
@@ -310,7 +310,6 @@ export default class HarderCalculator extends Vue {
         this.operators.unshift(x);
       } else {
         if (isNaN(x) || x === "") {
-          console.log("what?");
           this.showError("ERROR: Invalid equation");
           this.invalidEquation = true;
           return false;
