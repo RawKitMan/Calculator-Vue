@@ -8,7 +8,7 @@
         variant="danger"
         >{{ alertMsg }}</BAlert
       >
-      <BFormInput v-model="value" placeholder="0" type="number" />
+      <BFormInput v-model="value" readonly placeholder="0" type="number" />
       <BContainer>
         <BRow>
           <BCol>

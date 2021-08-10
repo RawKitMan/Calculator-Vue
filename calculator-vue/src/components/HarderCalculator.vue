@@ -12,6 +12,7 @@
         v-model="value"
         placeholder="Enter equation here"
         type="text"
+        readonly
       />
       <BContainer>
         <BRow>
